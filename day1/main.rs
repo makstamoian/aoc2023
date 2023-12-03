@@ -5,14 +5,27 @@ use std::time::Instant;
 use std::collections::HashMap;
 use std::collections::BTreeMap;
 
-fn get_numeric_characters(string: String) -> String {
-    let mut output: String = "".to_string();
-    for character in string.chars() {
-        if character.is_numeric() {
-            output.push(character);
+fn get_numeric_characters(string: String) -> u32 {
+    let mut result = 0;
+    let mut left_index = 0;
+    let mut right_index = string.len() - 1;
+    let mut first_number: u32 = 0;
+    let mut second_number: u32 = 0;
+
+    while (first_number == 0 || second_number == 0) && (left_index < string.len() && right_index > 0) {
+        if first_number == 0 {
+            first_number = string.chars().nth(left_index).unwrap().to_digit(10).unwrap_or(0);
+            left_index += 1;
+        }
+        
+        if second_number == 0 {
+            second_number = string.chars().nth(right_index).unwrap().to_digit(10).unwrap_or(0);
+            right_index -= 1;
         }
     }
-    return output.to_string();
+
+    result += first_number * 10 + second_number;
+    return result;
 }
 
 fn get_numeric_characters_or_spellings(string: String) -> String {
@@ -62,18 +75,13 @@ fn first_part() {
     let start_time = Instant::now();
 
     for line in file.lines() {
-        let mut calibration_string: String = "".to_string();
-        let only_numeric_characters = get_numeric_characters(line.unwrap());
-        calibration_string.push(only_numeric_characters.chars().nth(0).unwrap());
-        calibration_string.push(only_numeric_characters.chars().nth(only_numeric_characters.len() - 1).unwrap());
-        let calibration_value: u32 = calibration_string.parse::<u32>().unwrap();
-        sum += calibration_value;
+        sum += get_numeric_characters(line.unwrap());
     }
 
     let end_time = Instant::now();
 
     let elapsed_time = end_time - start_time;
-
+    
     print!("\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m", elapsed_time, sum);
 }
 
@@ -97,6 +105,7 @@ fn second_part() {
 }
 
 fn main() {
+    println!("Soving first day problem...");
     first_part();
     second_part();
 }
