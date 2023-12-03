@@ -66,7 +66,7 @@ fn get_numeric_characters_or_spellings(string: String) -> String {
     return output;
 }
 
-fn first_part() {
+fn part_one() {
     let file_path = "day1/input.txt";
     let file = File::open(file_path).unwrap();
     let file = BufReader::new(file);
@@ -85,7 +85,7 @@ fn first_part() {
     print!("\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m", elapsed_time, sum);
 }
 
-fn second_part() {
+fn part_two() {
     let file_path = "day1/input.txt";
     let file = File::open(file_path).unwrap();
     let file = BufReader::new(file);
@@ -106,6 +106,6 @@ fn second_part() {
 
 fn main() {
     println!("Soving first day problem...");
-    first_part();
-    second_part();
+    part_one();
+    part_two();
 }

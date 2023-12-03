@@ -55,7 +55,7 @@ fn get_game_power (game: String) -> usize {
 
 }
 
-fn first_part() {
+fn part_one() {
     let file_path = "day2/input.txt";
     let file = File::open(file_path).unwrap();
     let file = BufReader::new(file);
@@ -78,7 +78,7 @@ fn first_part() {
     print!("\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m", elapsed_time, possible_sum);
 }
 
-fn second_part() {
+fn part_two() {
     let file_path = "day2/input.txt";
     let file = File::open(file_path).unwrap();
     let file = BufReader::new(file);
@@ -102,6 +102,6 @@ fn second_part() {
 
 fn main() {
     println!("Soving second day problem...");
-    first_part();
-    second_part();
+    part_one();
+    part_two();
 }
