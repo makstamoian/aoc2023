@@ -1,9 +1,9 @@
-use std::io::BufReader;
-use std::io::prelude::*;
-use std::fs::File;
-use std::time::Instant;
-use std::collections::HashMap;
 use std::collections::BTreeMap;
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::prelude::*;
+use std::io::BufReader;
+use std::time::Instant;
 
 fn get_numeric_characters(string: String) -> u32 {
     let mut result = 0;
@@ -12,14 +12,26 @@ fn get_numeric_characters(string: String) -> u32 {
     let mut first_number: u32 = 0;
     let mut second_number: u32 = 0;
 
-    while (first_number == 0 || second_number == 0) && (left_index < string.len() && right_index > 0) {
+    while (first_number == 0 || second_number == 0)
+        && (left_index < string.len() && right_index > 0)
+    {
         if first_number == 0 {
-            first_number = string.chars().nth(left_index).unwrap().to_digit(10).unwrap_or(0);
+            first_number = string
+                .chars()
+                .nth(left_index)
+                .unwrap()
+                .to_digit(10)
+                .unwrap_or(0);
             left_index += 1;
         }
-        
+
         if second_number == 0 {
-            second_number = string.chars().nth(right_index).unwrap().to_digit(10).unwrap_or(0);
+            second_number = string
+                .chars()
+                .nth(right_index)
+                .unwrap()
+                .to_digit(10)
+                .unwrap_or(0);
             right_index -= 1;
         }
     }
@@ -29,7 +41,6 @@ fn get_numeric_characters(string: String) -> u32 {
 }
 
 fn get_numeric_characters_or_spellings(string: String) -> String {
-
     let mut spelling_aliases: HashMap<String, u32> = HashMap::new();
 
     spelling_aliases.insert("one".to_string(), 1);
@@ -47,10 +58,16 @@ fn get_numeric_characters_or_spellings(string: String) -> String {
     let mut indexed_characters: BTreeMap<u32, u32> = BTreeMap::new();
 
     for spelling in spelling_aliases.keys() {
-        let occurrences: Vec<_> = string.match_indices(spelling).map(|(i, _)|i).collect();
+        let occurrences: Vec<_> = string.match_indices(spelling).map(|(i, _)| i).collect();
         if occurrences.len() > 0 {
-            indexed_characters.insert(occurrences[0] as u32, *spelling_aliases.get(spelling).unwrap());
-            indexed_characters.insert(occurrences[occurrences.len() - 1] as u32, *spelling_aliases.get(spelling).unwrap());
+            indexed_characters.insert(
+                occurrences[0] as u32,
+                *spelling_aliases.get(spelling).unwrap(),
+            );
+            indexed_characters.insert(
+                occurrences[occurrences.len() - 1] as u32,
+                *spelling_aliases.get(spelling).unwrap(),
+            );
         }
     }
 
@@ -81,8 +98,11 @@ fn part_one() {
     let end_time = Instant::now();
 
     let elapsed_time = end_time - start_time;
-    
-    print!("\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m", elapsed_time, sum);
+
+    print!(
+        "\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
+        elapsed_time, sum
+    );
 }
 
 fn part_two() {
@@ -94,14 +114,19 @@ fn part_two() {
     let start_time = Instant::now();
 
     for line in file.lines() {
-        sum += get_numeric_characters_or_spellings(line.unwrap()).parse::<u32>().unwrap();
+        sum += get_numeric_characters_or_spellings(line.unwrap())
+            .parse::<u32>()
+            .unwrap();
     }
 
     let end_time = Instant::now();
 
     let elapsed_time = end_time - start_time;
 
-    print!("\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n", elapsed_time, sum);
+    print!(
+        "\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n",
+        elapsed_time, sum
+    );
 }
 
 fn main() {
