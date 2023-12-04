@@ -95,7 +95,6 @@ fn part_two() {
     let end_time = Instant::now();
 
     let elapsed_time = end_time - start_time;
-    
     print!("\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n", elapsed_time, powers_sum);
 
 }
