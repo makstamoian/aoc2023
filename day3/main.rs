@@ -15,14 +15,16 @@ struct Number {
 impl Number {
     pub fn new(value: u32, row: i32, col: i32) -> Self {
         let neighbors: HashSet<(i32, i32)> = HashSet::from([
-            (row - 1, col - 1),
-            (row - 1, col),
-            (row - 1, col + 1),
-            (row, col - 1),
-            (row, col + 1),
-            (row + 1, col - 1),
-            (row + 1, col),
-            (row + 1, col + 1),
+            (row - 1, col - 1), // symbol on the top left   @ . .
+            (row - 1, col), // symbol on the top middle     . @ .
+            (row - 1, col + 1), // symbol on the top right  . . @
+
+            (row, col - 1), // symbol to the left of given digit  @ . .
+            (row, col + 1), // symbol to the right of given digit . . @
+            
+            (row + 1, col - 1), // symbol on the bottom left  @ . .
+            (row + 1, col), // symbol on the bottom middle    . @ .
+            (row + 1, col + 1), // symbol on the bottom right . . @
         ]);
 
         return Self { value, neighbors };
