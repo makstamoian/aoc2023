@@ -26,7 +26,7 @@ impl Number {
             (row + 1, col), // symbol on the bottom middle    . @ .
             (row + 1, col + 1), // symbol on the bottom right . . @
         ]);
-
+        
         return Self { value, neighbors };
     }
 
