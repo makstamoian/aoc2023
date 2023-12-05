@@ -1,5 +1,5 @@
-use std::collections::HashSet;
 use std::collections::HashMap;
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
@@ -13,30 +13,25 @@ struct Number {
 }
 
 impl Number {
-    pub fn new(
-        value: u32,
-        row: i32,
-        col: i32,
-    ) -> Self {
+    pub fn new(value: u32, row: i32, col: i32) -> Self {
         let neighbors: HashSet<(i32, i32)> = HashSet::from([
-            (row - 1, col - 1),(row - 1, col),(row - 1, col + 1),
-            (row, col - 1),(row, col + 1),
-            (row + 1, col - 1),(row + 1, col),(row + 1, col + 1),
+            (row - 1, col - 1),
+            (row - 1, col),
+            (row - 1, col + 1),
+            (row, col - 1),
+            (row, col + 1),
+            (row + 1, col - 1),
+            (row + 1, col),
+            (row + 1, col + 1),
         ]);
 
-        return Self {
-            value,
-            neighbors
-        };
+        return Self { value, neighbors };
     }
 
     pub fn add_digit(&mut self, digit: u32, row: i32, col: i32) {
         self.value = self.value * 10 + digit;
-        self.neighbors.extend([
-            (row - 1, col + 1),
-            (row, col + 1),
-            (row + 1, col + 1), 
-        ]);
+        self.neighbors
+            .extend([(row - 1, col + 1), (row, col + 1), (row + 1, col + 1)]);
     }
 }
 
@@ -55,11 +50,14 @@ fn part_one() {
     let mut numbers: Vec<Number> = Vec::new();
 
     for (row, line) in file.lines().enumerate() {
-
         for (col, character) in line.unwrap().chars().enumerate() {
             if character.is_digit(10) {
                 if current_number.is_none() {
-                    current_number = Some(Number::new(character.to_digit(10).unwrap(), row as i32, col as i32));
+                    current_number = Some(Number::new(
+                        character.to_digit(10).unwrap(),
+                        row as i32,
+                        col as i32,
+                    ));
                 } else if let Some(ref mut number) = current_number {
                     number.add_digit(character.to_digit(10).unwrap(), row as i32, col as i32)
                 }
@@ -112,11 +110,14 @@ fn part_two() {
     let mut numbers: Vec<Number> = Vec::new();
 
     for (row, line) in file.lines().enumerate() {
-
         for (col, character) in line.unwrap().chars().enumerate() {
             if character.is_digit(10) {
                 if current_number.is_none() {
-                    current_number = Some(Number::new(character.to_digit(10).unwrap(), row as i32, col as i32));
+                    current_number = Some(Number::new(
+                        character.to_digit(10).unwrap(),
+                        row as i32,
+                        col as i32,
+                    ));
                 } else if let Some(ref mut number) = current_number {
                     number.add_digit(character.to_digit(10).unwrap(), row as i32, col as i32)
                 }
@@ -137,14 +138,16 @@ fn part_two() {
     for number in &numbers {
         for neighbor in &number.neighbors {
             if gears.contains_key(neighbor) {
-                gears.entry(*neighbor).and_modify(|neighbor_vaulues: &mut Vec<u32>| {
-                    neighbor_vaulues.push(number.value);
-                });
+                gears
+                    .entry(*neighbor)
+                    .and_modify(|neighbor_vaulues: &mut Vec<u32>| {
+                        neighbor_vaulues.push(number.value);
+                    });
             }
         }
     }
 
-    gears.retain(|_, neighbors| { neighbors.len() > 1 });
+    gears.retain(|_, neighbors| neighbors.len() > 1);
 
     for gear in gears.values() {
         let gear_power = gear.iter().nth(0).unwrap() * gear.iter().nth(1).unwrap();
