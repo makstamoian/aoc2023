@@ -57,17 +57,17 @@ fn part_one() {
                         character.to_digit(10).unwrap(),
                         row as i32,
                         col as i32,
-                    ));
-                } else if let Some(ref mut number) = current_number {
-                    number.add_digit(character.to_digit(10).unwrap(), row as i32, col as i32)
+                    )); // if we dont have any current number, set it here
+                } else if let Some(ref mut number) = current_number { // if we already have a number, then this digit is the next symbol of it
+                    number.add_digit(character.to_digit(10).unwrap(), row as i32, col as i32) // add digit to current number
                 }
             } else {
-                if current_number.is_some() {
+                if current_number.is_some() { // since we are done with this number, we push it to numbers vector
                     numbers.push(current_number.unwrap());
                 }
-                current_number = None;
+                current_number = None; // and erase it from current number
 
-                if character != '.' {
+                if character != '.' { // insert only special characters
                     symbols.insert((row as i32, col as i32));
                 }
             }
@@ -117,23 +117,23 @@ fn part_two() {
                         character.to_digit(10).unwrap(),
                         row as i32,
                         col as i32,
-                    ));
-                } else if let Some(ref mut number) = current_number {
-                    number.add_digit(character.to_digit(10).unwrap(), row as i32, col as i32)
+                    )); // if we dont have any current number, set it here
+                } else if let Some(ref mut number) = current_number { // if we already have a number, then this digit is the next symbol of it
+                    number.add_digit(character.to_digit(10).unwrap(), row as i32, col as i32) // add digit to current number
                 }
             } else {
-                if current_number.is_some() {
+                if current_number.is_some() { // since we are done with this number, we push it to numbers vector
                     numbers.push(current_number.unwrap());
                 }
 
-                current_number = None;
+                current_number = None; // and erase it from current number
 
-                if character == '*' {
-                    gears.insert((row as i32, col as i32), Vec::new());
+                if character == '*' { // watch for gears
+                    gears.insert((row as i32, col as i32), Vec::new()); // insert gears coordinates in gears hashmap
                 }
             }
         }
-    }
+    } // form our numbers vector, where numbers and their neighbors are stored
 
     for number in &numbers {
         for neighbor in &number.neighbors {
@@ -147,7 +147,7 @@ fn part_two() {
         }
     }
 
-    gears.retain(|_, neighbors| neighbors.len() > 1);
+    gears.retain(|_, neighbors| neighbors.len() > 1); // filter out lonely parts without any gears
 
     for gear in gears.values() {
         let gear_power = gear.iter().nth(0).unwrap() * gear.iter().nth(1).unwrap();
