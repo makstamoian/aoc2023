@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::time::Instant;
+use std::collections::HashMap;
 
 fn part_one() {
     let file_path = "day4/input.txt";
@@ -39,15 +40,9 @@ fn part_one() {
     let elapsed_time = end_time - start_time;
 
     print!(
-        "\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n",
+        "\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
         elapsed_time, sum
     );
-}
-
-struct Card {
-    id: u32,
-    winning_numbers: Vec<u32>,
-    our_numbers: Vec<u32>
 }
 
 fn part_two () {
@@ -55,11 +50,18 @@ fn part_two () {
     let file = File::open(file_path).unwrap();
     let file = BufReader::new(file);
 
-    let start_time = Instant::now();
-
     let mut sum: u32 = 0;
+
+    let start_time = Instant::now();
  
-    let mut cards: Vec<Card> = Vec::new();
+    let mut cards_copies: HashMap<u32, u32> = HashMap::new();
+    
+    let file2 = File::open(file_path).unwrap();
+    let file2 = BufReader::new(file2);
+
+    for index in 0..file2.lines().count() {
+        cards_copies.insert(index as u32, 1);
+    }
 
     for (index, line) in file.lines().enumerate() {
         let line = line.unwrap();
@@ -76,11 +78,17 @@ fn part_two () {
             }
         }
 
-        for i in index + 1..(index + overlapping_numbers_amount as usize) {
-            print!("{} ", i);
+        for _ in 0..*cards_copies.get(&(index as u32)).unwrap() as usize {
+            for i in (index + 1)..overlapping_numbers_amount as usize + index + 1 {
+                cards_copies.entry(i as u32).and_modify(|copies| {
+                    *copies += 1;
+                });
+            }
         }
+    }
 
-
+    for (_, card_copies_amount) in cards_copies {
+        sum += card_copies_amount;
     }
 
     let end_time = Instant::now();
@@ -88,7 +96,7 @@ fn part_two () {
     let elapsed_time = end_time - start_time;
 
     print!(
-        "\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
+        "\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n",
         elapsed_time, sum
     );
 }
