@@ -1,4 +1,5 @@
 use std::fs::File;
+use std::io::SeekFrom;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::time::Instant;
@@ -43,25 +44,26 @@ fn part_one() {
         "\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
         elapsed_time, sum
     );
+
 }
+
 
 fn part_two () {
     let file_path = "day4/input.txt";
     let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let mut file = BufReader::new(file);
 
     let mut sum: u32 = 0;
 
     let start_time = Instant::now();
  
     let mut cards_copies: HashMap<u32, u32> = HashMap::new();
-    
-    let file2 = File::open(file_path).unwrap();
-    let file2 = BufReader::new(file2);
 
-    for index in 0..file2.lines().count() {
+    for index in 0..file.by_ref().lines().count() {
         cards_copies.insert(index as u32, 1);
     }
+
+    let _ = file.seek(SeekFrom::Start(0));
 
     for (index, line) in file.lines().enumerate() {
         let line = line.unwrap();
@@ -78,12 +80,12 @@ fn part_two () {
             }
         }
 
-        for _ in 0..*cards_copies.get(&(index as u32)).unwrap() as usize {
-            for i in (index + 1)..overlapping_numbers_amount as usize + index + 1 {
-                cards_copies.entry(i as u32).and_modify(|copies| {
-                    *copies += 1;
-                });
-            }
+        let current_card_copies: u32 = *cards_copies.get(&(index as u32)).unwrap();
+
+        for i in (index + 1)..overlapping_numbers_amount as usize + index + 1 {
+            cards_copies.entry(i as u32).and_modify(|copies| {
+                *copies += 1 * current_card_copies;
+            });
         }
     }
 
