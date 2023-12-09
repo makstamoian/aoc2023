@@ -132,10 +132,6 @@ impl Hand {
             hand_type = Some(HandType::HighCard);
         }
 
-        // AAAAA - 5 A, 0 others
-        // AAQAA - 4 A, 1 Q, 0 others
-        // AAAQQ - 3A, 2Q
-
         return Self {
             cards: cards_vec,
             bid,
@@ -163,13 +159,12 @@ fn part_one() {
         hands.push(Hand::new(hand.to_string(), bid.parse::<u32>().unwrap()))
     }
 
-    hands.sort_by(|hand, other| hand.cmp(other)  );
+    hands.sort_by(|hand, other| hand.cmp(other));
+    hands.reverse();
 
     for (index, hand) in hands.iter().enumerate() {
         sum += (index + 1) as u64 * hand.bid as u64;
     }
-
-    println!("{:#?}", hands);
 
     println!("Finished part 1 in {:#?} with answer {:#?}", start_time.elapsed(), sum)
 
