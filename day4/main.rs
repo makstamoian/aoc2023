@@ -1,20 +1,16 @@
-use std::fs::File;
 use std::io::SeekFrom;
 use std::io::prelude::*;
-use std::io::BufReader;
 use std::time::Instant;
 use std::collections::HashMap;
 
 fn part_one() {
-    let file_path = "day4/input.txt";
-    let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let input = aoclib::file_reader::get_input("day4".to_string());
 
     let start_time = Instant::now();
 
     let mut sum: u32 = 0;
 
-    for line in file.lines() {
+    for line in input.lines() {
         let line = line.unwrap();
         let (_, card_informaion) = line.split_once(": ").unwrap();
         let (winning_numbers_string, our_numbers_string) = card_informaion.split_once(" | ").unwrap();
@@ -49,9 +45,7 @@ fn part_one() {
 
 
 fn part_two () {
-    let file_path = "day4/input.txt";
-    let file = File::open(file_path).unwrap();
-    let mut file = BufReader::new(file);
+    let mut input = aoclib::file_reader::get_input("day4".to_string());
 
     let mut sum: u32 = 0;
 
@@ -59,13 +53,13 @@ fn part_two () {
  
     let mut cards_copies: HashMap<u32, u32> = HashMap::new();
 
-    for index in 0..file.by_ref().lines().count() {
+    for index in 0..input.by_ref().lines().count() {
         cards_copies.insert(index as u32, 1);
     }
 
-    let _ = file.seek(SeekFrom::Start(0));
+    let _ = input.seek(SeekFrom::Start(0));
 
-    for (index, line) in file.lines().enumerate() {
+    for (index, line) in input.lines().enumerate() {
         let line = line.unwrap();
         let (_, card_informaion) = line.split_once(": ").unwrap();
         let (winning_numbers_string, our_numbers_string) = card_informaion.split_once(" | ").unwrap();

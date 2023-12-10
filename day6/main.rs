@@ -1,21 +1,18 @@
-use std::fs::File;
 use std::io::SeekFrom;
 use std::io::prelude::*;
-use std::io::BufReader;
 use std::time::Instant;
+use aoclib;
 
 fn part_one () {
-    let file_path = "day6/input.txt";
-    let file = File::open(file_path).unwrap();
-    let mut file = BufReader::new(file);
+    let mut input = aoclib::file_reader::get_input("day6".to_string());
 
     let start_time = Instant::now();
 
     let mut sum: u32 = 1;
 
-    let times_string = file.by_ref().lines().nth(0).unwrap().unwrap();
-    let _ = file.seek(SeekFrom::Start(0));
-    let distances_string = file.by_ref().lines().nth(1).unwrap().unwrap();
+    let times_string = input.by_ref().lines().nth(0).unwrap().unwrap();
+    let _ = input.seek(SeekFrom::Start(0));
+    let distances_string = input.by_ref().lines().nth(1).unwrap().unwrap();
 
     let (_, mut times_string_values) = times_string.split_once(":").unwrap();
     let (_, mut distances_string_values) = distances_string.split_once(":").unwrap();
@@ -59,15 +56,13 @@ fn part_one () {
 }
 
 fn part_two () {
-    let file_path = "day6/input.txt";
-    let file = File::open(file_path).unwrap();
-    let mut file = BufReader::new(file);
+    let mut input = aoclib::file_reader::get_input("day6".to_string());
 
     let start_time = Instant::now();
 
-    let times_string = file.by_ref().lines().nth(0).unwrap().unwrap();
-    let _ = file.seek(SeekFrom::Start(0));
-    let distances_string = file.by_ref().lines().nth(1).unwrap().unwrap();
+    let times_string = input.by_ref().lines().nth(0).unwrap().unwrap();
+    let _ = input.seek(SeekFrom::Start(0));
+    let distances_string = input.by_ref().lines().nth(1).unwrap().unwrap();
 
     let (_, mut times_string_values) = times_string.split_once(":").unwrap();
     let (_, mut distances_string_values) = distances_string.split_once(":").unwrap();

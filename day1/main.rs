@@ -1,9 +1,8 @@
 use std::collections::BTreeMap;
 use std::collections::HashMap;
-use std::fs::File;
 use std::io::prelude::*;
-use std::io::BufReader;
 use std::time::Instant;
+
 
 fn get_numeric_characters(string: String) -> u32 {
     let mut result = 0;
@@ -84,14 +83,13 @@ fn get_numeric_characters_or_spellings(string: String) -> String {
 }
 
 fn part_one() {
-    let file_path = "day1/input.txt";
-    let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let input = aoclib::file_reader::get_input("day1".to_string());
+
     let mut sum: u32 = 0;
 
     let start_time = Instant::now();
 
-    for line in file.lines() {
+    for line in input.lines() {
         sum += get_numeric_characters(line.unwrap());
     }
 
@@ -106,14 +104,13 @@ fn part_one() {
 }
 
 fn part_two() {
-    let file_path = "day1/input.txt";
-    let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let input = aoclib::file_reader::get_input("day1".to_string());
+
     let mut sum: u32 = 0;
 
     let start_time = Instant::now();
 
-    for line in file.lines() {
+    for line in input.lines() {
         sum += get_numeric_characters_or_spellings(line.unwrap())
             .parse::<u32>()
             .unwrap();

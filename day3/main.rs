@@ -1,8 +1,6 @@
 use std::collections::HashMap;
 use std::collections::HashSet;
-use std::fs::File;
 use std::io::prelude::*;
-use std::io::BufReader;
 use std::time::Instant;
 
 #[derive(Debug)]
@@ -38,9 +36,7 @@ impl Number {
 }
 
 fn part_one() {
-    let file_path = "day3/input.txt";
-    let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let input = aoclib::file_reader::get_input("day3".to_string());
 
     let mut sum = 0;
 
@@ -51,7 +47,7 @@ fn part_one() {
     let mut current_number: Option<Number> = None;
     let mut numbers: Vec<Number> = Vec::new();
 
-    for (row, line) in file.lines().enumerate() {
+    for (row, line) in input.lines().enumerate() {
         for (col, character) in line.unwrap().chars().enumerate() {
             if character.is_digit(10) {
                 if current_number.is_none() {
@@ -98,9 +94,7 @@ fn part_one() {
 }
 
 fn part_two() {
-    let file_path = "day3/input.txt";
-    let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let input = aoclib::file_reader::get_input("day3".to_string());
 
     let mut sum = 0;
 
@@ -111,7 +105,7 @@ fn part_two() {
     let mut current_number: Option<Number> = None;
     let mut numbers: Vec<Number> = Vec::new();
 
-    for (row, line) in file.lines().enumerate() {
+    for (row, line) in input.lines().enumerate() {
         for (col, character) in line.unwrap().chars().enumerate() {
             if character.is_digit(10) {
                 if current_number.is_none() {

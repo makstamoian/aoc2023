@@ -1,7 +1,5 @@
 use std::collections::HashMap;
-use std::fs::File;
 use std::io::prelude::*;
-use std::io::BufReader;
 use std::time::Instant;
 
 fn is_game_possible(game: String) -> bool {
@@ -67,15 +65,13 @@ fn get_game_power(game: String) -> usize {
 }
 
 fn part_one() {
-    let file_path = "day2/input.txt";
-    let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let input = aoclib::file_reader::get_input("day2".to_string());
 
     let mut possible_sum: usize = 0;
 
     let start_time = Instant::now();
 
-    for (index, line) in file.lines().enumerate() {
+    for (index, line) in input.lines().enumerate() {
         if is_game_possible(line.unwrap()) {
             possible_sum += index + 1
         }
@@ -92,15 +88,13 @@ fn part_one() {
 }
 
 fn part_two() {
-    let file_path = "day2/input.txt";
-    let file = File::open(file_path).unwrap();
-    let file = BufReader::new(file);
+    let input = aoclib::file_reader::get_input("day2".to_string());
 
     let mut powers_sum: usize = 0;
 
     let start_time = Instant::now();
 
-    for line in file.lines() {
+    for line in input.lines() {
         powers_sum += get_game_power(line.unwrap());
     }
 
