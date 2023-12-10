@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use std::io::prelude::*;
 use std::time::Instant;
 
-
 fn get_numeric_characters(string: String) -> u32 {
     let mut result = 0;
     let mut left_index = 0;
@@ -127,7 +126,7 @@ fn part_two() {
 }
 
 fn main() {
-    println!("Soving first day problem...");
+    println!("Solving day 1...");
     part_one();
     part_two();
 }

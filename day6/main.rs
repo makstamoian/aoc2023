@@ -98,6 +98,7 @@ fn part_two () {
 }
 
 fn main () {
+    println!("Solving day 6...");
     part_one();
     part_two();
 }

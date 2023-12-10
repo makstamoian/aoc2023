@@ -108,7 +108,7 @@ fn part_two() {
 }
 
 fn main() {
-    println!("Soving second day problem...");
+    println!("Solving day 2...");
     part_one();
     part_two();
 }
