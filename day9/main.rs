@@ -25,14 +25,12 @@ fn get_sequence_next_item (sequence: Vec<i32>) -> i32 {
     
     let mut shift_sequences: Vec<Vec<i32>> = Vec::from([sequence]);
 
-    while !is_sequence_zero(shift_sequences.iter().next_back().unwrap()) {
-        shift_sequences.push(get_shift_sequence(shift_sequences.iter().next_back().unwrap()))
+    while !is_sequence_zero(shift_sequences.last().unwrap()) {
+        shift_sequences.push(get_shift_sequence(shift_sequences.last().unwrap()))
     }
 
-
-
     for shift_sequence in &shift_sequences {
-        next_item += shift_sequence.iter().next_back().unwrap();
+        next_item += shift_sequence.last().unwrap();
     }
 
     return next_item;
@@ -43,8 +41,8 @@ fn get_sequence_previous_item (sequence: Vec<i32>) -> i32 {
     
     let mut shift_sequences: Vec<Vec<i32>> = Vec::from([sequence]);
 
-    while !is_sequence_zero(shift_sequences.iter().next_back().unwrap()) {
-        shift_sequences.push(get_shift_sequence(shift_sequences.iter().next_back().unwrap()))
+    while !is_sequence_zero(shift_sequences.last().unwrap()) {
+        shift_sequences.push(get_shift_sequence(shift_sequences.last().unwrap()))
     }
 
     for index in (1..shift_sequences.len()).rev() {
