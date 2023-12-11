@@ -73,13 +73,13 @@ fn parse_hand_part_one (cards_vec: &Vec<Card>) -> HandType {
                     .count() as u32,
             );
         }
-    }
+    } // Filling up cards_count map
 
-    if cards_counts.values().count() == 1 {
+    if cards_counts.values().count() == 1 { // QQQQQ => FiveOfAKind
         return HandType::FiveOfAKind
     }
 
-    if cards_counts.values().count() == 2 {
+    if cards_counts.values().count() == 2 { // AAAQQ => FullHouse || AAAAQ => FourOfAKind
         for card_count in cards_counts.values() {
             if card_count == &4 {
                 return HandType::FourOfAKind;
@@ -90,13 +90,15 @@ fn parse_hand_part_one (cards_vec: &Vec<Card>) -> HandType {
         }
     }
 
-    if cards_counts.values().count() == 3 {
+    if cards_counts.values().count() == 3 { // QQAJJ => TwoPair || QQQAJ => ThreeOfAKind
         let mut not_two_pair: bool = false;
         for card_count in cards_counts.values() {
             if card_count > &2 {
                 not_two_pair = true;
+                break;
             }
         }
+        
         if not_two_pair {
             return HandType::ThreeOfAKind;
         } else {
@@ -104,11 +106,11 @@ fn parse_hand_part_one (cards_vec: &Vec<Card>) -> HandType {
         }
     }
 
-    if cards_counts.values().count() == 4 {
+    if cards_counts.values().count() == 4 { // QQATK => OnePair
         return HandType::OnePair;
     }
 
-    if cards_counts.values().count() == 5 {
+    if cards_counts.values().count() == 5 { // AQTKJ => HighCard
         return HandType::HighCard;
     }
 
@@ -131,62 +133,62 @@ fn parse_hand_part_two (cards_vec: &Vec<Card>) -> HandType {
                     .count() as u32,
             );
         }
-    }
+    } // Filling up cards_count map
 
-    if cards_counts.values().count() == 1 {
+    if cards_counts.values().count() == 1 { // QQQQQ => FiveOfAKind || JJJJJ => FiveOfAKind
         return HandType::FiveOfAKind
     }
 
-    if cards_counts.values().count() == 2 { // QQQAA
+    if cards_counts.values().count() == 2 { // QQQAA  => FullHouse || QQQQA => FourOfAKind
         if jokers_amount > 0 { // JJJAA => AAAAA || AAAJJ => AAAAA || JAAAA => AAAAA || JJJJA => AAAAA
             return HandType::FiveOfAKind;
         }
+
         for card_count in cards_counts.values() {
-            if card_count == &4 { // AAAAQ
+            if card_count == &4 { // AAAAQ => FourOfAKind
                 return HandType::FourOfAKind;
             }
-            if card_count == &3 {
+            if card_count == &3 { // AAAQQ => FullHouse
                 return HandType::FullHouse;
             }
         }
     }
 
-    if cards_counts.values().count() == 3 {
+    if cards_counts.values().count() == 3 { // QQAKK => TwoPair 
         let mut not_two_pair: bool = false;
+        
         for card_count in cards_counts.values() {
             if card_count > &2 {
                 not_two_pair = true;
             }
         }
+
         if not_two_pair { // QQQA2
-            if jokers_amount > 0 {
+            if jokers_amount > 0 { // QQQAJ => QQQAQ => FourOfAKind
                 return HandType::FourOfAKind;
             }
-            return HandType::ThreeOfAKind;
+            return HandType::ThreeOfAKind; // QQQA2 => ThreeOfAKind
         } else {
             if jokers_amount > 0 {
-                if jokers_amount == 1 { // AAJQQ => AAAQQ
+                if jokers_amount == 1 { // AAJQQ => AAAQQ => FullHouse
                     return HandType::FullHouse;
                 }
-                if jokers_amount == 2 { // JJAQQ => QQAQQ
+                if jokers_amount == 2 { // JJAQQ => QQAQQ => FourOfAKind
                     return HandType::FourOfAKind;
                 }
             }
-            return HandType::TwoPair;
+            return HandType::TwoPair; // AAKQQ => TwoPair
         }
     }
 
-    if cards_counts.values().count() == 4 { // QA27Q
-        if jokers_amount == 1 { // QAJ7Q => QAQ7Q
-            return HandType::ThreeOfAKind;
-        }
-        if jokers_amount == 2 { // JJQA2 => QQQA2
+    if cards_counts.values().count() == 4 { // QA2JQ => ThreeOfAKind || QA2JJ => QA2QQ => ThreeOfAKind
+        if jokers_amount > 0 {
             return HandType::ThreeOfAKind;
         }
         return HandType::OnePair;
     }
 
-    if cards_counts.values().count() == 5 {
+    if cards_counts.values().count() == 5 { // QAKT2 => HighCard || QAKTJ => QAKTQ => OnePair
         if jokers_amount > 0 {
             return HandType::OnePair;
         }
@@ -205,7 +207,7 @@ impl Hand {
                     'A' => Card::A,
                     'K' => Card::K,
                     'Q' => Card::Q,
-                    'J' => if part == 1 { Card::J} else { Card::JOKER } ,
+                    'J' => if part == 1 { Card::J } else { Card::JOKER },
                     'T' => Card::T,
                     '2' => Card::Two,
                     '3' => Card::Three,
