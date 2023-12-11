@@ -6,7 +6,7 @@ edition = "2021"
 
 [lib]
 name = "aoclib"
-path = "aoclib/src/lib.rs"
+path = "aoclib/lib.rs"
 crate-type = ["lib"]
 
 [[bin]]
@@ -32,3 +32,7 @@ path = "day6/main.rs"
 [[bin]]
 name = "day7"
 path = "day7/main.rs"
+
+[[bin]]
+name = "day9"
+path = "day9/main.rs"
