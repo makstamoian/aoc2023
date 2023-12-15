@@ -1,4 +1,6 @@
-use std::{io::{prelude::*, SeekFrom}, collections::vec_deque, time::Instant};
+use std::io::prelude::*;
+use std::io::SeekFrom; 
+use std::time::Instant;
 
 #[derive(Debug, Copy, Clone)]
 struct Coordinate {
@@ -138,8 +140,8 @@ fn part_two() {
     }
 
     print!(
-        "\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}, {:#?}\x1b[0m\n",
-        start_time.elapsed(), sum, u32::MAX
+        "\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n",
+        start_time.elapsed(), sum
     );
 }
 
