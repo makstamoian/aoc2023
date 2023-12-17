@@ -1,4 +1,7 @@
-use std::{collections::{VecDeque, HashSet}, io::BufRead, time::Instant};
+use std::collections::VecDeque;
+use std::collections::HashSet;
+use std::io::BufRead;
+use std::time::Instant;
 
 #[derive(Debug, Clone, Copy, PartialEq, Hash, Eq)]
 enum Direction {
