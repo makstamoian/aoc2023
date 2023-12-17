@@ -256,8 +256,8 @@ fn part_one() {
         sum += (index + 1) as u64 * hand.bid as u64;
     }
 
-    println!(
-        "Finished part 1 in {:#?} with answer {:#?}",
+    print!(
+        "Finished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
         start_time.elapsed(),
         sum
     )
@@ -287,15 +287,13 @@ fn part_two() {
         sum += (index + 1) as u64 * hand.bid as u64;
     }
 
-    println!(
-        "Finished part 2 in {:#?} with answer {:#?}",
-        start_time.elapsed(),
-        sum
-    )
+    print!(
+        "\nFinished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n",
+        start_time.elapsed(), sum
+    );
 }
 
 fn main() {
-    println!("Solving day 7...");
     part_one();
     part_two()
 }

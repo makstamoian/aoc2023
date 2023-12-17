@@ -70,7 +70,7 @@ fn part_one() {
     }
 
     print!(
-        "\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
+        "Finished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
         start_time.elapsed(), sum
     );
 }

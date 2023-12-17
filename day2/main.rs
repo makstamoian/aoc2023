@@ -82,7 +82,7 @@ fn part_one() {
     let elapsed_time = end_time - start_time;
 
     print!(
-        "\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
+        "Finished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
         elapsed_time, possible_sum
     );
 }
@@ -108,7 +108,6 @@ fn part_two() {
 }
 
 fn main() {
-    println!("Solving day 2...");
     part_one();
     part_two();
 }

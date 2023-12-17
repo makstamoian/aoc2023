@@ -18,18 +18,20 @@ fn energized_for_current_config(
     let mut visited_once: Vec<(u32, u32)> = Vec::new();
 
     while next_vector.len() > 0 {
-        let next = next_vector.pop_front();
+        let next = next_vector.pop_back();
         let next = next.unwrap();
 
+        if visited.contains(&next) {
+            continue;
+        }
+        if !visited_once.contains(&(next.0, next.1)) {
+            energized_beams += 1;
+            visited_once.push((next.0, next.1));
+        }
+        visited.push(next);
+
         if contraption[next.1 as usize][next.0 as usize] == '.' {
-            if visited.contains(&next) {
-                continue;
-            }
-            if !visited_once.contains(&(next.0, next.1)) {
-                energized_beams += 1;
-                visited_once.push((next.0, next.1));
-            }
-            visited.push(next);
+            
             match next.2 {
                 Direction::Right => {
                     if next.0 < (contraption[0].len() - 1) as u32 {
@@ -55,14 +57,7 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '|' {
-            if visited.contains(&next) {
-                continue;
-            }
-            if !visited_once.contains(&(next.0, next.1)) {
-                energized_beams += 1;
-                visited_once.push((next.0, next.1));
-            }
-            visited.push(next);
+            
             match next.2 {
                 Direction::Right => {
                     if next.1 < (contraption.len() - 1) as u32 {
@@ -96,14 +91,7 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '-' {
-            if visited.contains(&next) {
-                continue;
-            }
-            if !visited_once.contains(&(next.0, next.1)) {
-                energized_beams += 1;
-                visited_once.push((next.0, next.1));
-            }
-            visited.push(next);
+            
             match next.2 {
                 Direction::Downwards => {
                     if next.0 < (contraption[0].len() - 1) as u32 {
@@ -137,18 +125,11 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '/' {
-            if visited.contains(&next) {
-                continue;
-            }
-            if !visited_once.contains(&(next.0, next.1)) {
-                energized_beams += 1;
-                visited_once.push((next.0, next.1));
-            }
-            visited.push(next);
+            
             match next.2 {
                 Direction::Right => {
                     if next.1 > 0 {
-                        next_vector.push_back((next.0, next.1 - 1, Direction::Upwards))
+                        next_vector.push_back((next.0, next.1 - 1, Direction::Upwards));
                     }
                 }
                 Direction::Left => {
@@ -170,14 +151,7 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '\\' {
-            if visited.contains(&next) {
-                continue;
-            }
-            if !visited_once.contains(&(next.0, next.1)) {
-                energized_beams += 1;
-                visited_once.push((next.0, next.1));
-            }
-            visited.push(next);
+            
             match next.2 {
                 Direction::Left => {
                     if next.1 > 0 {
@@ -205,43 +179,78 @@ fn energized_for_current_config(
     return energized_beams;
 }
 
-fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> Vec<(u32, u32, Direction)>{
+fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> Vec<(u32, u32, Direction)> {
     let mut possible_starting_beams: Vec<(u32, u32, Direction)> = Vec::new();
 
-    let corner_beams: Vec<(u32, u32, Direction)> = Vec::from([ // 8 of them because we have to track the directions also
+    let corner_beams: Vec<(u32, u32, Direction)> = Vec::from([ // corners
+        // 8 of them because we have to track the directions also
         (0, 0, Direction::Right),
         (0, 0, Direction::Downwards),
         (0, (contraption.len() - 1) as u32, Direction::Right),
         (0, (contraption.len() - 1) as u32, Direction::Upwards),
         ((contraption[0].len() - 1) as u32, 0, Direction::Left),
         ((contraption[0].len() - 1) as u32, 0, Direction::Downwards),
-        ((contraption[0].len() - 1) as u32, (contraption.len() - 1) as u32, Direction::Left),
-        ((contraption[0].len() - 1) as u32, (contraption.len() - 1) as u32, Direction::Upwards),
+        (
+            (contraption[0].len() - 1) as u32,
+            (contraption.len() - 1) as u32,
+            Direction::Left,
+        ),
+        (
+            (contraption[0].len() - 1) as u32,
+            (contraption.len() - 1) as u32,
+            Direction::Upwards,
+        ),
     ]);
 
-    for y_index in 1..contraption.len() - 2 { // all exept first and the last ones
+    for y_index in 1..contraption.len() - 2 {
+        // all exept first and the last ones
         if contraption[y_index][0] == '.' {
             possible_starting_beams.push((0, y_index as u32, Direction::Upwards));
             possible_starting_beams.push((0, y_index as u32, Direction::Downwards));
             possible_starting_beams.push((0, y_index as u32, Direction::Right));
         }
         if contraption[y_index][contraption[0].len() - 2] == '.' {
-            possible_starting_beams.push(((contraption[0].len() - 2) as u32, y_index as u32, Direction::Upwards));
-            possible_starting_beams.push(((contraption[0].len() - 2) as u32, y_index as u32, Direction::Downwards));
-            possible_starting_beams.push(((contraption[0].len() - 2) as u32, y_index as u32, Direction::Left));
+            possible_starting_beams.push((
+                (contraption[0].len() - 2) as u32,
+                y_index as u32,
+                Direction::Upwards,
+            ));
+            possible_starting_beams.push((
+                (contraption[0].len() - 2) as u32,
+                y_index as u32,
+                Direction::Downwards,
+            ));
+            possible_starting_beams.push((
+                (contraption[0].len() - 2) as u32,
+                y_index as u32,
+                Direction::Left,
+            ));
         }
     }
 
-    for x_index in 1..contraption[0].len() - 2 { // all exept first and the last ones
+    for x_index in 1..contraption[0].len() - 2 {
+        // all exept first and the last ones
         if contraption[0][x_index] == '.' {
             possible_starting_beams.push((x_index as u32, 0 as u32, Direction::Downwards));
             possible_starting_beams.push((x_index as u32, 0 as u32, Direction::Left));
             possible_starting_beams.push((x_index as u32, 0 as u32, Direction::Right));
         }
         if contraption[contraption.len() - 2][x_index] == '.' {
-            possible_starting_beams.push((x_index as u32, (contraption.len() - 2) as u32, Direction::Upwards));
-            possible_starting_beams.push((x_index as u32, (contraption.len() - 2) as u32, Direction::Downwards));
-            possible_starting_beams.push((x_index as u32, (contraption.len() - 2) as u32, Direction::Left));
+            possible_starting_beams.push((
+                x_index as u32,
+                (contraption.len() - 2) as u32,
+                Direction::Upwards,
+            ));
+            possible_starting_beams.push((
+                x_index as u32,
+                (contraption.len() - 2) as u32,
+                Direction::Downwards,
+            ));
+            possible_starting_beams.push((
+                x_index as u32,
+                (contraption.len() - 2) as u32,
+                Direction::Left,
+            ));
         }
     }
 
@@ -267,7 +276,7 @@ fn part_one() {
     let sum = energized_for_current_config(&contraption, (0, 0, Direction::Right));
 
     print!(
-        "\nFinished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
+        "Finished part 1 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m",
         start_time.elapsed(),
         sum
     );
@@ -286,7 +295,8 @@ fn part_two() {
         contraption.push(line_characters);
     }
 
-    let possible_starting_beams: Vec<(u32, u32, Direction)> = get_possible_starting_beams(&contraption);
+    let possible_starting_beams: Vec<(u32, u32, Direction)> =
+        get_possible_starting_beams(&contraption);
 
     let mut max_energized_beams: u32 = 0;
 
