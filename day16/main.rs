@@ -1,6 +1,6 @@
-use std::{collections::VecDeque, io::BufRead, time::Instant};
+use std::{collections::{VecDeque, HashSet}, io::BufRead, time::Instant};
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Hash, Eq)]
 enum Direction {
     Right,
     Left,
@@ -14,8 +14,8 @@ fn energized_for_current_config(
 ) -> u32 {
     let mut energized_beams: u32 = 0;
     let mut next_vector: VecDeque<(u32, u32, Direction)> = VecDeque::from([starting_beam]);
-    let mut visited: Vec<(u32, u32, Direction)> = Vec::new();
-    let mut visited_once: Vec<(u32, u32)> = Vec::new();
+    let mut visited: HashSet<(u32, u32, Direction)> = HashSet::new();
+    let mut visited_once: HashSet<(u32, u32)> = HashSet::new();
 
     while next_vector.len() > 0 {
         let next = next_vector.pop_back();
@@ -26,9 +26,9 @@ fn energized_for_current_config(
         }
         if !visited_once.contains(&(next.0, next.1)) {
             energized_beams += 1;
-            visited_once.push((next.0, next.1));
+            visited_once.insert((next.0, next.1));
         }
-        visited.push(next);
+        visited.insert(next);
 
         if contraption[next.1 as usize][next.0 as usize] == '.' {
             
@@ -179,10 +179,10 @@ fn energized_for_current_config(
     return energized_beams;
 }
 
-fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> Vec<(u32, u32, Direction)> {
-    let mut possible_starting_beams: Vec<(u32, u32, Direction)> = Vec::new();
+fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u32, Direction)> {
+    let mut possible_starting_beams: HashSet<(u32, u32, Direction)> = HashSet::new();
 
-    let corner_beams: Vec<(u32, u32, Direction)> = Vec::from([ // corners
+    let corner_beams: HashSet<(u32, u32, Direction)> = HashSet::from([ // corners
         // 8 of them because we have to track the directions also
         (0, 0, Direction::Right),
         (0, 0, Direction::Downwards),
@@ -205,22 +205,22 @@ fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> Vec<(u32, u32, D
     for y_index in 1..contraption.len() - 2 {
         // all exept first and the last ones
         if contraption[y_index][0] == '.' {
-            possible_starting_beams.push((0, y_index as u32, Direction::Upwards));
-            possible_starting_beams.push((0, y_index as u32, Direction::Downwards));
-            possible_starting_beams.push((0, y_index as u32, Direction::Right));
+            possible_starting_beams.insert((0, y_index as u32, Direction::Upwards));
+            possible_starting_beams.insert((0, y_index as u32, Direction::Downwards));
+            possible_starting_beams.insert((0, y_index as u32, Direction::Right));
         }
         if contraption[y_index][contraption[0].len() - 2] == '.' {
-            possible_starting_beams.push((
+            possible_starting_beams.insert((
                 (contraption[0].len() - 2) as u32,
                 y_index as u32,
                 Direction::Upwards,
             ));
-            possible_starting_beams.push((
+            possible_starting_beams.insert((
                 (contraption[0].len() - 2) as u32,
                 y_index as u32,
                 Direction::Downwards,
             ));
-            possible_starting_beams.push((
+            possible_starting_beams.insert((
                 (contraption[0].len() - 2) as u32,
                 y_index as u32,
                 Direction::Left,
@@ -231,22 +231,22 @@ fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> Vec<(u32, u32, D
     for x_index in 1..contraption[0].len() - 2 {
         // all exept first and the last ones
         if contraption[0][x_index] == '.' {
-            possible_starting_beams.push((x_index as u32, 0 as u32, Direction::Downwards));
-            possible_starting_beams.push((x_index as u32, 0 as u32, Direction::Left));
-            possible_starting_beams.push((x_index as u32, 0 as u32, Direction::Right));
+            possible_starting_beams.insert((x_index as u32, 0 as u32, Direction::Downwards));
+            possible_starting_beams.insert((x_index as u32, 0 as u32, Direction::Left));
+            possible_starting_beams.insert((x_index as u32, 0 as u32, Direction::Right));
         }
         if contraption[contraption.len() - 2][x_index] == '.' {
-            possible_starting_beams.push((
+            possible_starting_beams.insert((
                 x_index as u32,
                 (contraption.len() - 2) as u32,
                 Direction::Upwards,
             ));
-            possible_starting_beams.push((
+            possible_starting_beams.insert((
                 x_index as u32,
                 (contraption.len() - 2) as u32,
                 Direction::Downwards,
             ));
-            possible_starting_beams.push((
+            possible_starting_beams.insert((
                 x_index as u32,
                 (contraption.len() - 2) as u32,
                 Direction::Left,
@@ -295,7 +295,7 @@ fn part_two() {
         contraption.push(line_characters);
     }
 
-    let possible_starting_beams: Vec<(u32, u32, Direction)> =
+    let possible_starting_beams: HashSet<(u32, u32, Direction)> =
         get_possible_starting_beams(&contraption);
 
     let mut max_energized_beams: u32 = 0;
