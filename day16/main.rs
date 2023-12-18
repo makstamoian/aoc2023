@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use std::collections::HashSet;
+use std::collections::VecDeque;
 use std::io::BufRead;
 use std::time::Instant;
 
@@ -34,7 +34,6 @@ fn energized_for_current_config(
         visited.insert(next);
 
         if contraption[next.1 as usize][next.0 as usize] == '.' {
-            
             match next.2 {
                 Direction::Right => {
                     if next.0 < (contraption[0].len() - 1) as u32 {
@@ -60,7 +59,6 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '|' {
-            
             match next.2 {
                 Direction::Right => {
                     if next.1 < (contraption.len() - 1) as u32 {
@@ -94,7 +92,6 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '-' {
-            
             match next.2 {
                 Direction::Downwards => {
                     if next.0 < (contraption[0].len() - 1) as u32 {
@@ -128,7 +125,6 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '/' {
-            
             match next.2 {
                 Direction::Right => {
                     if next.1 > 0 {
@@ -154,7 +150,6 @@ fn energized_for_current_config(
         }
 
         if contraption[next.1 as usize][next.0 as usize] == '\\' {
-            
             match next.2 {
                 Direction::Left => {
                     if next.1 > 0 {
@@ -182,11 +177,11 @@ fn energized_for_current_config(
     return energized_beams;
 }
 
-
 fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u32, Direction)> {
     let mut possible_starting_beams: HashSet<(u32, u32, Direction)> = HashSet::new();
 
-    let corner_beams: HashSet<(u32, u32, Direction)> = HashSet::from([ // corners
+    let corner_beams: HashSet<(u32, u32, Direction)> = HashSet::from([
+        // corners
         // 8 of them because we have to track the directions also
         (0, 0, Direction::Right),
         (0, 0, Direction::Downwards),
