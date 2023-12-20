@@ -15,4 +15,6 @@ chmod +x run-all.sh
 ./run-all.sh
 ```
 
+These solutions don't claim to be the most performant ones and are written in C-like style since I am just learning Rust, infact this AoC is my first code in Rust
+
 Release option servers to provide higher performance (compared to dev building). For more info see: https://nnethercote.github.io/perf-book/build-configuration.html

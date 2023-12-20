@@ -4,7 +4,6 @@ use std::io::prelude::*;
 use std::time::Instant;
 
 fn get_numeric_characters(string: String) -> u32 {
-    let mut result = 0;
     let mut left_index = 0;
     let mut right_index = string.len() - 1;
     let mut first_number: u32 = 0;
@@ -34,8 +33,7 @@ fn get_numeric_characters(string: String) -> u32 {
         }
     }
 
-    result += first_number * 10 + second_number;
-    return result;
+    return first_number * 10 + second_number;
 }
 
 fn get_numeric_characters_or_spellings(string: String) -> String {
