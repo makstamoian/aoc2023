@@ -177,6 +177,7 @@ fn energized_for_current_config(
     return energized_beams;
 }
 
+
 fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u32, Direction)> {
     let mut possible_starting_beams: HashSet<(u32, u32, Direction)> = HashSet::new();
 
@@ -204,21 +205,9 @@ fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u3
     for y_index in 1..contraption.len() - 2 {
         // all exept first and the last ones
         if contraption[y_index][0] == '.' {
-            possible_starting_beams.insert((0, y_index as u32, Direction::Upwards));
-            possible_starting_beams.insert((0, y_index as u32, Direction::Downwards));
             possible_starting_beams.insert((0, y_index as u32, Direction::Right));
         }
         if contraption[y_index][contraption[0].len() - 2] == '.' {
-            possible_starting_beams.insert((
-                (contraption[0].len() - 2) as u32,
-                y_index as u32,
-                Direction::Upwards,
-            ));
-            possible_starting_beams.insert((
-                (contraption[0].len() - 2) as u32,
-                y_index as u32,
-                Direction::Downwards,
-            ));
             possible_starting_beams.insert((
                 (contraption[0].len() - 2) as u32,
                 y_index as u32,
@@ -231,24 +220,12 @@ fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u3
         // all exept first and the last ones
         if contraption[0][x_index] == '.' {
             possible_starting_beams.insert((x_index as u32, 0 as u32, Direction::Downwards));
-            possible_starting_beams.insert((x_index as u32, 0 as u32, Direction::Left));
-            possible_starting_beams.insert((x_index as u32, 0 as u32, Direction::Right));
         }
         if contraption[contraption.len() - 2][x_index] == '.' {
             possible_starting_beams.insert((
                 x_index as u32,
                 (contraption.len() - 2) as u32,
                 Direction::Upwards,
-            ));
-            possible_starting_beams.insert((
-                x_index as u32,
-                (contraption.len() - 2) as u32,
-                Direction::Downwards,
-            ));
-            possible_starting_beams.insert((
-                x_index as u32,
-                (contraption.len() - 2) as u32,
-                Direction::Left,
             ));
         }
     }
@@ -259,6 +236,7 @@ fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u3
 
     return possible_starting_beams;
 }
+
 fn part_one() {
     let input = aoclib::file_reader::get_input("day16".to_string());
 
