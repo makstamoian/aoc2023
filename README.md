@@ -15,4 +15,4 @@ chmod +x run-all.sh
 ./run-all.sh
 ```
 
-Release option servers to provide higher performance (compared to dev building). For more info see: https://nnethercote.github.io/perf-book/build-configuration.html
+Release option serves to provide higher performance (compared to dev building). For more info see: https://nnethercote.github.io/perf-book/build-configuration.html
