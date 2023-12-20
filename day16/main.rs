@@ -177,7 +177,6 @@ fn energized_for_current_config(
     return energized_beams;
 }
 
-
 fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u32, Direction)> {
     let mut possible_starting_beams: HashSet<(u32, u32, Direction)> = HashSet::new();
 
@@ -231,8 +230,6 @@ fn get_possible_starting_beams(contraption: &Vec<Vec<char>>) -> HashSet<(u32, u3
     }
 
     possible_starting_beams.extend(corner_beams);
-
-    // Here we will do some calculations...
 
     return possible_starting_beams;
 }
