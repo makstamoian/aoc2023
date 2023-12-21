@@ -72,7 +72,6 @@ fn part_two() {
         for shift in 0..chunk[1] {
             seeds.push(chunk[0] + shift);
         }
-        println!("Chunk: {chunk:?}");
     }
 
     let mut input_string: String = String::new();
@@ -81,7 +80,6 @@ fn part_two() {
     let mut closest_location: i64 = i64::MAX;
 
     for mut location in seeds {
-
         for data in input_string.split("\n\n") {
             let data = data.trim().to_string();
             let (_, field_data) = data.split_once(":\n").unwrap();
@@ -104,12 +102,8 @@ fn part_two() {
             }
         }
 
-        println!("{:#?} :: New location: {location:?}", Instant::now());
-
-
         if location < closest_location {
             closest_location = location;
-            println!("{:#?} :: New closest location: {closest_location:?}", Instant::now())
         }
     }
     print!(
