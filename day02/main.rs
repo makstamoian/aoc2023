@@ -65,7 +65,7 @@ fn get_game_power(game: String) -> usize {
 }
 
 fn part_one() {
-    let input = aoclib::file_reader::get_input("day2".to_string());
+    let input = aoclib::file_reader::get_input("day02".to_string());
 
     let mut possible_sum: usize = 0;
 
@@ -88,7 +88,7 @@ fn part_one() {
 }
 
 fn part_two() {
-    let input = aoclib::file_reader::get_input("day2".to_string());
+    let input = aoclib::file_reader::get_input("day02".to_string());
 
     let mut powers_sum: usize = 0;
 

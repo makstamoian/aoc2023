@@ -4,7 +4,7 @@ use std::time::Instant;
 use aoclib;
 
 fn part_one () {
-    let mut input = aoclib::file_reader::get_input("day6".to_string());
+    let mut input = aoclib::file_reader::get_input("day06".to_string());
 
     let start_time = Instant::now();
 
@@ -56,7 +56,7 @@ fn part_one () {
 }
 
 fn part_two () {
-    let mut input = aoclib::file_reader::get_input("day6".to_string());
+    let mut input = aoclib::file_reader::get_input("day06".to_string());
 
     let start_time = Instant::now();
 

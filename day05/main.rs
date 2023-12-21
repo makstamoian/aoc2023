@@ -2,7 +2,7 @@ use std::io::prelude::*;
 use std::time::Instant;
 
 fn part_one() {
-    let mut input = aoclib::file_reader::get_input("day5".to_string());
+    let mut input = aoclib::file_reader::get_input("day05".to_string());
 
     let start_time = Instant::now();
     let first_line = input.by_ref().lines().next().unwrap().unwrap();
@@ -55,7 +55,7 @@ fn part_one() {
 }
 
 fn part_two() {
-    let mut input = aoclib::file_reader::get_input("day5".to_string());
+    let mut input = aoclib::file_reader::get_input("day05".to_string());
 
     let start_time = Instant::now();
     let first_line = input.by_ref().lines().next().unwrap().unwrap();

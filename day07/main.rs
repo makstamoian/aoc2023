@@ -233,7 +233,7 @@ impl Hand {
 }
 
 fn part_one() {
-    let mut input = aoclib::file_reader::get_input("day7".to_string());
+    let mut input = aoclib::file_reader::get_input("day07".to_string());
 
     let mut sum: u64 = 0;
 
@@ -264,7 +264,7 @@ fn part_one() {
 }
 
 fn part_two() {
-    let mut input = aoclib::file_reader::get_input("day7".to_string());
+    let mut input = aoclib::file_reader::get_input("day07".to_string());
 
     let mut sum: u64 = 0;
 

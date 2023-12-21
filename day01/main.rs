@@ -80,7 +80,7 @@ fn get_numeric_characters_or_spellings(string: String) -> String {
 }
 
 fn part_one() {
-    let input = aoclib::file_reader::get_input("day1".to_string());
+    let input = aoclib::file_reader::get_input("day01".to_string());
 
     let mut sum: u32 = 0;
 
@@ -101,7 +101,7 @@ fn part_one() {
 }
 
 fn part_two() {
-    let input = aoclib::file_reader::get_input("day1".to_string());
+    let input = aoclib::file_reader::get_input("day01".to_string());
 
     let mut sum: u32 = 0;
 

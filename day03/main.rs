@@ -36,7 +36,7 @@ impl Number {
 }
 
 fn part_one() {
-    let input = aoclib::file_reader::get_input("day3".to_string());
+    let input = aoclib::file_reader::get_input("day03".to_string());
 
     let mut sum = 0;
 
@@ -94,7 +94,7 @@ fn part_one() {
 }
 
 fn part_two() {
-    let input = aoclib::file_reader::get_input("day3".to_string());
+    let input = aoclib::file_reader::get_input("day03".to_string());
 
     let mut sum = 0;
 

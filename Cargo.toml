@@ -10,36 +10,36 @@ path = "aoclib/lib.rs"
 crate-type = ["lib"]
 
 [[bin]]
-name = "day1"
-path = "day1/main.rs"
+name = "day01"
+path = "day01/main.rs"
 
 [[bin]]
-name = "day2"
-path = "day2/main.rs"
+name = "day02"
+path = "day02/main.rs"
 
 [[bin]]
-name = "day3"
-path = "day3/main.rs"
+name = "day03"
+path = "day03/main.rs"
 
 [[bin]]
-name = "day4"
-path = "day4/main.rs"
+name = "day04"
+path = "day04/main.rs"
 
 [[bin]]
-name = "day5"
-path = "day5/main.rs"
+name = "day05"
+path = "day05/main.rs"
 
 [[bin]]
-name = "day6"
-path = "day6/main.rs"
+name = "day06"
+path = "day06/main.rs"
 
 [[bin]]
-name = "day7"
-path = "day7/main.rs"
+name = "day07"
+path = "day07/main.rs"
 
 [[bin]]
-name = "day9"
-path = "day9/main.rs"
+name = "day09"
+path = "day09/main.rs"
 
 [[bin]]
 name = "day11"
