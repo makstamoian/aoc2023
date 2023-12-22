@@ -79,7 +79,8 @@ fn part_two() {
 
     let mut closest_location: i64 = i64::MAX;
 
-    for mut location in seeds {
+    for seed in seeds {
+        let mut location = seed;
         for data in input_string.split("\n\n") {
             let data = data.trim().to_string();
             let (_, field_data) = data.split_once(":\n").unwrap();
@@ -101,6 +102,8 @@ fn part_two() {
                     }
             }
         }
+
+        println!("{seed:?} : {location:?}");
 
         if location < closest_location {
             closest_location = location;
