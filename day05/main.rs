@@ -92,14 +92,14 @@ fn part_two() {
                     .map(|item| item.parse::<i64>().unwrap())
                     .collect();
 
-                    if location >= range_data[1] && location <= range_data[1] + range_data[2] {
-                        if range_data[0] as i32 - range_data[1] as i32 > 0 {
-                            location += range_data[0].abs_diff(range_data[1]) as i64;
-                        } else {
-                            location -= range_data[0].abs_diff(range_data[1]) as i64;
-                        }
-                        break;
+                if location >= range_data[1] && location <= range_data[1] + range_data[2] {
+                    if range_data[0] as i32 - range_data[1] as i32 > 0 {
+                        location += range_data[0].abs_diff(range_data[1]) as i64;
+                    } else {
+                        location -= range_data[0].abs_diff(range_data[1]) as i64;
                     }
+                    break;
+                }
             }
         }
 
