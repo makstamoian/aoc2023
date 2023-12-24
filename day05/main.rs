@@ -1,3 +1,4 @@
+use std::collections::VecDeque;
 use std::io::prelude::*;
 use std::time::Instant;
 
@@ -66,21 +67,14 @@ fn part_two() {
         .map(|seed| seed.parse::<i64>().unwrap())
         .collect();
 
-    let mut seeds: Vec<i64> = Vec::new();
-
-    for chunk in seeds_ranges.chunks(2) {
-        for shift in 0..chunk[1] {
-            seeds.push(chunk[0] + shift);
-        }
-    }
-
     let mut input_string: String = String::new();
     let _ = input.read_to_string(&mut input_string);
 
     let mut closest_location: i64 = i64::MAX;
+    let mut ranges: VecDeque<&[i64]> = seeds_ranges.chunks(2).collect();
 
-    for seed in seeds {
-        let mut location = seed;
+    while ranges.len() > 0 {
+        let range = ranges.pop_back().unwrap();
         for data in input_string.split("\n\n") {
             let data = data.trim().to_string();
             let (_, field_data) = data.split_once(":\n").unwrap();
@@ -92,23 +86,23 @@ fn part_two() {
                     .map(|item| item.parse::<i64>().unwrap())
                     .collect();
 
-                if location >= range_data[1] && location <= range_data[1] + range_data[2] {
-                    if range_data[0] as i32 - range_data[1] as i32 > 0 {
-                        location += range_data[0].abs_diff(range_data[1]) as i64;
-                    } else {
-                        location -= range_data[0].abs_diff(range_data[1]) as i64;
-                    }
-                    break;
+                // if location >= range_data[1] && location <= range_data[1] + range_data[2] {
+                //     if range_data[0] - range_data[1] > 0 {
+                //         location += range_data[0].abs_diff(range_data[1]) as i64;
+                //     } else {
+                //         location -= range_data[0].abs_diff(range_data[1]) as i64;
+                //     }
+                //     break;
+                // }
+
+                if range[0] < range_data[1] {
+                    
                 }
+
             }
         }
-
-        println!("{seed:?} : {location:?}");
-
-        if location < closest_location {
-            closest_location = location;
-        }
     }
+
     print!(
         "Finished part 2 in: \x1b[1m{:#?}\x1b[0m with answer: \x1b[1m{:#?}\x1b[0m\n",
         start_time.elapsed(),
